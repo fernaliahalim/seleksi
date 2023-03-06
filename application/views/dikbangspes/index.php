@@ -4,12 +4,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0">Jenis Dikbangspes</h1>
+					<h1 class="m-0">List Dikbangspes</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="<?= base_url(); ?>home/sign_out">Home</a></li>
-						<li class="breadcrumb-item active">Jenis Dikbangspes</li>
+						<li class="breadcrumb-item active">List Dikbangspes</li>
 					</ol>
 				</div>
 			</div>
@@ -24,20 +24,43 @@
 				<section class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<button type="button" class="btn btn-success" id="btn-add" data-toggle="modal" data-target="#modal-lg">
-								<i class="nav-icon fas fa-plus"></i> &nbsp; Tambah Data
-							</button>
-							<br /><br />
+							<div class="row">
+								<div class="col-md-8">
+									<button type="button" class="btn btn-success" id="btn-add" data-toggle="modal" data-target="#modal-lg">
+										<i class="nav-icon fas fa-plus"></i> &nbsp; Tambah Data
+									</button>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Tahun</span>
+										</div>
+										<select class="form-control" id="y" name="y">
+											<?php foreach ($rs_year->result_array() as $row) { ?>
+												<option id="<?= $row['tahun']; ?>" <?= $row['tahun'] == $tahun ? 'selected' : ''; ?>><?= $row['tahun']; ?></option>
+											<?php } ?>
+										</select>
+										<span class="input-group-append">
+											<button type="button" class="btn btn-info btn-flat" id="btn-search">
+												<i class="nav-icon fas fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<br />
 							<table id="tabel_data" class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										<th width="20px;">No.</th>
-										<th>Fungsi Dikbangspes</th>
+										<th width="30px;">No.</th>
+										<th>Nama</th>
+										<th>Pangkat</th>
+										<th>NRP</th>
+										<th>Jabatan</th>
+										<th>Kesatuan</th>
 										<th>Jenis Dikbangspes</th>
-										<th>Jumlah Siswa</th>
-										<th>Lama Pendidikan</th>
-										<th>Buka</th>
-										<th>Tutup</th>
+										<th>Fungsi Dikbangspes</th>
+										<th>Tahun</th>
 										<th>#</th>
 									</tr>
 								</thead>
@@ -47,28 +70,36 @@
 										<tr>
 											<td><?= $i++; ?></td>
 											<td>
+												<?= $row['nama']; ?>
+												<input type="text" id="nama_<?= $row['id']; ?>" value="<?= $row['nama']; ?>" hidden />
+											</td>
+											<td>
+												<?= $row['pangkat']; ?>
+												<input type="text" id="pangkat_<?= $row['id']; ?>" value="<?= $row['pangkat']; ?>" hidden />
+											</td>
+											<td>
+												<?= $row['nrp']; ?>
+												<input type="text" id="nrp_<?= $row['id']; ?>" value="<?= $row['nrp']; ?>" hidden />
+											</td>
+											<td>
+												<?= $row['jabatan']; ?>
+												<input type="text" id="jabatan_<?= $row['id']; ?>" value="<?= $row['jabatan']; ?>" hidden />
+											</td>
+											<td>
+												<?= $row['kesatuan']; ?>
+												<input type="text" id="kesatuan_<?= $row['id']; ?>" value="<?= $row['kesatuan']; ?>" hidden />
+											</td>
+											<td>
+												<?= $row['nama_dikbangspes']; ?>
+												<input type="text" id="id_jenis_dikbangspes_<?= $row['id']; ?>" value="<?= $row['id_jenis_dikbangspes']; ?>" hidden />
+											</td>
+											<td>
 												<?= $row['detail']; ?>
 												<input type="text" id="id_fungsi_dikbangspes_<?= $row['id']; ?>" value="<?= $row['id_fungsi_dikbangspes']; ?>" hidden />
 											</td>
 											<td>
-												<?= $row['nama_dikbangspes']; ?>
-												<input type="text" id="nama_dikbangspes_<?= $row['id']; ?>" value="<?= $row['nama_dikbangspes']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['jml_siswa']; ?>
-												<input type="text" id="jml_siswa_<?= $row['id']; ?>" value="<?= $row['jml_siswa']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['lama_pendidikan']; ?>
-												<input type="text" id="lama_pendidikan_<?= $row['id']; ?>" value="<?= $row['lama_pendidikan']; ?>" hidden />
-											</td>
-											<td>
-												<?= date("d-m-Y", strtotime($row['pelaksanaan_open'])); ?>
-												<input type="text" id="pelaksanaan_open_<?= $row['id']; ?>" value="<?= $row['pelaksanaan_open']; ?>" hidden />
-											</td>
-											<td>
-												<?= date("d-m-Y", strtotime($row['pelaksanaan_close'])); ?>
-												<input type="text" id="pelaksanaan_close_<?= $row['id']; ?>" value="<?= $row['pelaksanaan_close']; ?>" hidden />
+												<?= $row['tahun']; ?>
+												<input type="text" id="tahun_<?= $row['id']; ?>" value="<?= $row['tahun']; ?>" hidden />
 											</td>
 											<td>
 												<button type="button" class="btn btn-sm btn-warning btn-update" id="<?= $row['id']; ?>" data-toggle="tooltip" title="Ubah">
@@ -103,33 +134,47 @@
 				</div>
 				<div class="modal-body">
 					<div class="mb-3">
-						<label class="form-label">Fungsi Dikbangspes</label>
+						<label class="form-label">Nama</label>
 						<input type="text" id="id-modal" name="id" value="" hidden />
-						<select class="form-control form-control" id="id_fungsi_dikbangspes-modal" name="id_fungsi_dikbangspes">
+						<input type="text" class="form-control" id="nama-modal" name="nama" placeholder="Nama">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Pangkat</label>
+						<input type="text" class="form-control" id="pangkat-modal" name="pangkat" placeholder="Pangkat">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">NRP</label>
+						<input type="text" class="form-control" id="nrp-modal" name="nrp" placeholder="NRP">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Jabatan</label>
+						<input type="text" class="form-control" id="jabatan-modal" name="jabatan" placeholder="Jabatan">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Kesatuan</label>
+						<input type="text" class="form-control" id="kesatuan-modal" name="kesatuan" placeholder="Kesatuan">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Fungsi Dikbangspes</label>
+						<select class="form-control" id="id_fungsi_dikbangspes-modal" name="id_fungsi_dikbangspes">
+							<option value="0">--- Pilih Fungsi Dikbangspes ---</option>
 							<?php foreach ($rs_fungsi->result_array() as $row) { ?>
 								<option value="<?= $row['id']; ?>"><?= $row['detail']; ?></option>
 							<?php } ?>
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Jenis Dikbangspes</label>
-						<input type="text" class="form-control" id="nama_dikbangspes-modal" name="nama_dikbangspes" placeholder="Jenis Dikbangspes">
+						<label class="form-label">Fungsi Dikbangspes</label>
+						<select class="form-control" id="id_jenis_dikbangspes-modal" name="id_jenis_dikbangspes">
+							<option value="0">--- Pilih Jenis Dikbangspes ---</option>
+							<?php foreach ($rs_jenis->result_array() as $row) { ?>
+								<option value="<?= $row['id']; ?>"><?= $row['nama_dikbangspes']; ?></option>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Jumlah Siswa</label>
-						<input type="text" class="form-control" id="jml_siswa-modal" name="jml_siswa" placeholder="Jumlah Siswa">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Lama Pendidikan</label>
-						<input type="text" class="form-control" id="lama_pendidikan-modal" name="lama_pendidikan" placeholder="Lama Pendidikan">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Tanggal Awal Pelaksanaan</label>
-						<input type="date" class="form-control" id="pelaksanaan_open-modal" name="pelaksanaan_open">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Tanggal Akhir Pelaksanaan</label>
-						<input type="date" class="form-control" id="pelaksanaan_close-modal" name="pelaksanaan_close">
+						<label class="form-label">Tahun</label>
+						<input type="text" class="form-control" id="tahun-modal" name="tahun" placeholder="Tahun">
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -178,9 +223,30 @@
 			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
 		}).buttons().container().appendTo('#tabel_data_wrapper .col-md-6:eq(0)');
 
+		$('#id_fungsi_dikbangspes-modal').change(function() {
+			$.ajax({
+				url: "<?= base_url() ?>dikbangspes/get_jenis_dikbangspes",
+				delay: 250,
+				method: 'GET',
+				data: {
+					q: $('#id_fungsi_dikbangspes-modal').val()
+				},
+				success: function(response) {
+					$('#id_jenis_dikbangspes-modal').html(response);
+				},
+				error: function() {
+					toastr.error('Oops! Silahkan coba lagi!')
+				}
+			});
+		});
+
+		$('#btn-search').click(function() {
+			var y = $('#y').val();
+			location.href = "<?= base_url(); ?>dikbangspes?y=" + y;
+		});
 
 		$('#btn-add').click(function() {
-			$('.modal-title').html('Form Tambah Data Jenis Dikbangspes');
+			$('.modal-title').html('Form Tambah List Dikbangspes');
 			$('.btn-save-add-data').show();
 			$('.btn-save-change-data').hide();
 
@@ -189,7 +255,7 @@
 
 		$('.btn-save-add-data').click(function() {
 			$.ajax({
-				url: "<?= base_url(); ?>jenis_dikbangspes/add",
+				url: "<?= base_url(); ?>dikbangspes/add",
 				method: "post",
 				data: $('#form-dikbangspes').serialize(),
 				success: function(data) {
@@ -206,14 +272,16 @@
 		$("#tabel_data tbody").on("click", ".btn-update", function() {
 			var id = $(this).attr('id');
 
-			$('.modal-title').html('Form Edit Data Fungsi Dikbangspes');
+			$('.modal-title').html('Form Edit List Dikbangspes');
 			$('#id-modal').val(id);
+			$('#nama-modal').val($('#nama_' + id).val());
+			$('#pangkat-modal').val($('#pangkat_' + id).val());
+			$('#nrp-modal').val($('#nrp_' + id).val());
+			$('#jabatan-modal').val($('#jabatan_' + id).val());
+			$('#kesatuan-modal').val($('#kesatuan_' + id).val());
 			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val());
-			$('#nama_dikbangspes-modal').val($('#nama_dikbangspes_' + id).val());
-			$('#jml_siswa-modal').val($('#jml_siswa_' + id).val());
-			$('#lama_pendidikan-modal').val($('#lama_pendidikan_' + id).val());
-			$('#pelaksanaan_open-modal').val($('#pelaksanaan_open_' + id).val());
-			$('#pelaksanaan_close-modal').val($('#pelaksanaan_close_' + id).val());
+			$('#id_jenis_dikbangspes-modal').val($('#id_jenis_dikbangspes_' + id).val());
+			$('#tahun-modal').val($('#tahun_' + id).val());
 
 			$('.btn-save-add-data').hide();
 			$('.btn-save-change-data').show();
@@ -224,7 +292,7 @@
 
 		$('.btn-save-change-data').click(function() {
 			$.ajax({
-				url: "<?= base_url(); ?>jenis_dikbangspes/edit_by_id",
+				url: "<?= base_url(); ?>dikbangspes/edit_by_id",
 				method: "post",
 				data: $('#form-dikbangspes').serialize(),
 				success: function(data) {
@@ -247,7 +315,7 @@
 
 		$('.btn-save-delete-data').click(function() {
 			$.ajax({
-				url: "<?= base_url(); ?>jenis_dikbangspes/delete_by_id",
+				url: "<?= base_url(); ?>dikbangspes/delete_by_id",
 				method: "post",
 				data: $('#form-dikbangspes-delete').serialize(),
 				success: function(data) {

@@ -7,14 +7,21 @@ class Jenis_dikbangspes_model extends CI_Model
 		$sql = "SELECT jenis_dikbangspes.*, 
 					   fungsi_dikbangspes.detail 
 				FROM jenis_dikbangspes
-				JOIN fungsi_dikbangspes ON fungsi_dikbangspes.id = jenis_dikbangspes.id_jenis_dikbangspes
-				ORDER BY jenis_dikbangspes.id_jenis_dikbangspes;";
+				JOIN fungsi_dikbangspes ON fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes
+				ORDER BY jenis_dikbangspes.id_fungsi_dikbangspes;";
 		return $this->db->query($sql);
+	}
+
+	public function get_all_by_fungsi($q)
+	{
+		$sql = "SELECT * FROM jenis_dikbangspes
+				WHERE id_fungsi_dikbangspes = ?;";
+		return $this->db->query($sql, $q);
 	}
 
 	public function add($data)
 	{
-		$sql = "INSERT INTO jenis_dikbangspes(nama_dikbangspes, jml_siswa, lama_pendidikan, pelaksanaan_open, pelaksanaan_close, id_jenis_dikbangspes)
+		$sql = "INSERT INTO jenis_dikbangspes(nama_dikbangspes, jml_siswa, lama_pendidikan, pelaksanaan_open, pelaksanaan_close, id_fungsi_dikbangspes)
                 VALUES(?, ?, ?, ?, ?, ?);";
 		return $this->db->query($sql, $data);
 	}
@@ -27,7 +34,7 @@ class Jenis_dikbangspes_model extends CI_Model
 					lama_pendidikan = ?,
 					pelaksanaan_open = ?,
 					pelaksanaan_close = ?,
-					id_jenis_dikbangspes = ?
+					id_fungsi_dikbangspes = ?
                 WHERE id = ?;";
 		return $this->db->query($sql, $data);
 	}
