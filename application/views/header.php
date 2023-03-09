@@ -63,6 +63,7 @@
 	<!-- <script src="<?= base_url(); ?>assets/js/pages/dashboard.js"></script> -->
 
 	<script src="<?= base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="<?= base_url(); ?>assets/plugins/jszip/jszip.min.js"></script>
 	<script src="<?= base_url(); ?>assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 	<script src="<?= base_url(); ?>assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 	<script src="<?= base_url(); ?>assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>

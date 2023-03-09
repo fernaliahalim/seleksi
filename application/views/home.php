@@ -19,12 +19,12 @@
 
 	<section class="content">
 		<div class="container-fluid">
-			<h2 class="text-center display-4">Search</h2>
+			<h2 class="text-center display-4">Pencarian</h2>
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
-					<form action="simple-results.html">
+					<form action="<?= base_url(); ?>dashboard" method="get">
 						<div class="input-group">
-							<input type="search" class="form-control form-control-lg" placeholder="Type your keywords here">
+							<input type="search" class="form-control form-control-lg" name="nrp" placeholder="Ketikan NRP/NIP untuk mencari data dikbangspes personil" value="<?= $nrp != '' ? $nrp : ''; ?>">
 							<div class="input-group-append">
 								<button type="submit" class="btn btn-lg btn-default">
 									<i class="fa fa-search"></i>
@@ -34,8 +34,89 @@
 					</form>
 				</div>
 			</div>
+			<br />
+			<br />
+			<?php if ($nrp != "") { ?>
+				<div class="row" id="section-dikbangspes">
+					<div class="col-md-3">
 
+						<div class="card card-primary card-outline">
+							<div class="card-body box-profile">
+								<div class="text-center">
+									<img class="profile-user-img img-fluid img-circle" src="<?= base_url(); ?>assets/images/avatar5.png" alt="User profile picture">
+								</div>
+								<h3 class="profile-username text-center"><?= $nama; ?></h3>
+								<p class="text-muted text-center"><?= $nrp; ?></p>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="col-md-9">
+						<div class="card">
+							<div class="card-header p-2">
+								Riwayat Dikbangspes
+							</div>
+							<div class="card-body">
+								<table id="tabel_data" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th width="30px;">No.</th>
+											<th>Pangkat</th>
+											<th>Jabatan</th>
+											<th>Kesatuan</th>
+											<th>Jenis Dikbangspes</th>
+											<th>Fungsi Dikbangspes</th>
+											<th>Tahun</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+										for ($i = 0; $i < count($dikbangspes); $i++) { ?>
+											<tr>
+												<td><?= $i + 1; ?></td>
+												<td>
+													<?= $pangkat[$i]; ?>
+												</td>
+												<td>
+													<?= $jabatan[$i]; ?>
+												</td>
+												<td>
+													<?= $kesatuan[$i]; ?>
+												</td>
+												<td>
+													<?= $dikbangspes[$i]; ?>
+												</td>
+												<td>
+													<?= $detail[$i]; ?>
+												</td>
+												<td>
+													<?= $tahun[$i]; ?>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			<?php } ?>
 		</div>
 	</section>
 
 </div>
+
+<script>
+	$(document).ready(function() {
+		$("#tabel_data").DataTable({
+			"responsive": true,
+			"lengthChange": false,
+			"autoWidth": false,
+			"buttons": ["copy", 'excelHtml5', "print", "colvis"]
+		}).buttons().container().appendTo('#tabel_data_wrapper .col-md-6:eq(0)');
+	});
+</script>

@@ -140,7 +140,41 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Pangkat</label>
-						<input type="text" class="form-control" id="pangkat-modal" name="pangkat" placeholder="Pangkat">
+						<select class="form-control" id="pangkat-modal" name="pangkat">
+							<option value="0">--- Pilih Pangkat ---</option>
+							<option value="KOMBES POL">KOMBES POL</option>
+							<option value="AKBP">AKBP</option>
+							<option value="KOMPOL">KOMPOL</option>
+							<option value="AKP">AKP</option>
+							<option value="IPTU">IPTU</option>
+							<option value="IPDA">IPDA</option>
+							<option value="AIPTU">AIPTU</option>
+							<option value="AIPDA">AIPDA</option>
+							<option value="BRIPKA">BRIPKA</option>
+							<option value="BRIGPOL">BRIGPOL</option>
+							<option value="BRIPTU">BRIPTU</option>
+							<option value="BRIPDA">BRIPDA</option>
+							<option value="ABRIP">ABRIP</option>
+							<option value="ABRIPTU">ABRIPTU</option>
+							<option value="ABRIPDA">ABRIPDA</option>
+							<option value="BHARAKA">BHARAKA</option>
+							<option value="BHARATU">BHARATU</option>
+
+							<option value="PEMBINA TK. I (IV/b)">PEMBINA TK. I (IV/b)</option>
+							<option value="PEMBINA (IV/a)">PEMBINA (IV/a)</option>
+							<option value="PENATA TK. I (III/d)">PENATA TK. I (III/d)</option>
+							<option value="PENATA (III/c)">PENATA (III/c)</option>
+							<option value="PENDA TK. I (III/b)">PENDA TK. I (III/b)</option>
+							<option value="PENDA (III/a)">PENDA (III/a)</option>
+							<option value="PENGATUR TK. I (II/d)">PENGATUR TK. I (II/d)</option>
+							<option value="PENGATUR (II/c)">PENGATUR (II/c)</option>
+							<option value="PENGDA TK. I (II/b)">PENGDA TK. I (II/b)</option>
+							<option value="PENGDA (II/a)">PENGDA (II/a)</option>
+							<option value="JURU TK. I (I/d)">JURU TK. I (I/d)</option>
+							<option value="JURU (I/c)">JURU (I/c)</option>
+							<option value="JURDA TK. I (I/b)">JURDA TK. I (I/b)</option>
+							<option value="JURDA (I/a)">JURDA (I/a)</option>
+						</select>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">NRP</label>
@@ -164,7 +198,7 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Fungsi Dikbangspes</label>
+						<label class="form-label">Jenis Dikbangspes</label>
 						<select class="form-control" id="id_jenis_dikbangspes-modal" name="id_jenis_dikbangspes">
 							<option value="0">--- Pilih Jenis Dikbangspes ---</option>
 							<?php foreach ($rs_jenis->result_array() as $row) { ?>
@@ -220,7 +254,7 @@
 			"responsive": true,
 			"lengthChange": false,
 			"autoWidth": false,
-			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+			"buttons": ["copy", 'excelHtml5', "print", "colvis"]
 		}).buttons().container().appendTo('#tabel_data_wrapper .col-md-6:eq(0)');
 
 		$('#id_fungsi_dikbangspes-modal').change(function() {
