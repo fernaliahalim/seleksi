@@ -36,6 +36,7 @@
 											<span class="input-group-text">Tahun</span>
 										</div>
 										<select class="form-control" id="y" name="y">
+											<option id="All" <?= $tahun == 'All' ? 'selected' : ''; ?>>All</option>
 											<?php foreach ($rs_year->result_array() as $row) { ?>
 												<option id="<?= $row['tahun']; ?>" <?= $row['tahun'] == $tahun ? 'selected' : ''; ?>><?= $row['tahun']; ?></option>
 											<?php } ?>
@@ -58,59 +59,14 @@
 										<th>NRP</th>
 										<th>Jabatan</th>
 										<th>Kesatuan</th>
-										<th>Jenis Dikbangspes</th>
 										<th>Fungsi Dikbangspes</th>
+										<th>Jenis Dikbangspes</th>
 										<th>Tahun</th>
 										<th>#</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php $i = 1;
-									foreach ($rs_data->result_array() as $row) { ?>
-										<tr>
-											<td><?= $i++; ?></td>
-											<td>
-												<?= $row['nama']; ?>
-												<input type="text" id="nama_<?= $row['id']; ?>" value="<?= $row['nama']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['pangkat']; ?>
-												<input type="text" id="pangkat_<?= $row['id']; ?>" value="<?= $row['pangkat']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['nrp']; ?>
-												<input type="text" id="nrp_<?= $row['id']; ?>" value="<?= $row['nrp']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['jabatan']; ?>
-												<input type="text" id="jabatan_<?= $row['id']; ?>" value="<?= $row['jabatan']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['kesatuan']; ?>
-												<input type="text" id="kesatuan_<?= $row['id']; ?>" value="<?= $row['kesatuan']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['nama_dikbangspes']; ?>
-												<input type="text" id="id_jenis_dikbangspes_<?= $row['id']; ?>" value="<?= $row['id_jenis_dikbangspes']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['detail']; ?>
-												<input type="text" id="id_fungsi_dikbangspes_<?= $row['id']; ?>" value="<?= $row['id_fungsi_dikbangspes']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['tahun']; ?>
-												<input type="text" id="tahun_<?= $row['id']; ?>" value="<?= $row['tahun']; ?>" hidden />
-											</td>
-											<td>
-												<button type="button" class="btn btn-sm btn-warning btn-update" id="<?= $row['id']; ?>" data-toggle="tooltip" title="Ubah">
-													<i class="nav-icon fas fa-edit"></i>
-												</button>
-												<button type="button" class="btn btn-sm btn-danger btn-delete" id="<?= $row['id']; ?>" data-toggle="tooltip" title="Hapus">
-													<i class="nav-icon fas fa-trash-alt"></i>
-												</button>
-											</td>
-										</tr>
-									<?php } ?>
+
 								</tbody>
 							</table>
 						</div>
@@ -140,7 +96,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Pangkat</label>
-						<select class="form-control" id="pangkat-modal" name="pangkat">
+						<select class="form-control select2bs4" id="pangkat-modal" name="pangkat">
 							<option value="0">--- Pilih Pangkat ---</option>
 							<option value="KOMBES POL">KOMBES POL</option>
 							<option value="AKBP">AKBP</option>
@@ -190,7 +146,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Fungsi Dikbangspes</label>
-						<select class="form-control" id="id_fungsi_dikbangspes-modal" name="id_fungsi_dikbangspes">
+						<select class="form-control select2bs4" id="id_fungsi_dikbangspes-modal" name="id_fungsi_dikbangspes">
 							<option value="0">--- Pilih Fungsi Dikbangspes ---</option>
 							<?php foreach ($rs_fungsi->result_array() as $row) { ?>
 								<option value="<?= $row['id']; ?>"><?= $row['detail']; ?></option>
@@ -199,7 +155,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Jenis Dikbangspes</label>
-						<select class="form-control" id="id_jenis_dikbangspes-modal" name="id_jenis_dikbangspes">
+						<select class="form-control select2bs4" id="id_jenis_dikbangspes-modal" name="id_jenis_dikbangspes">
 							<option value="0">--- Pilih Jenis Dikbangspes ---</option>
 							<?php foreach ($rs_jenis->result_array() as $row) { ?>
 								<option value="<?= $row['id']; ?>"><?= $row['nama_dikbangspes']; ?></option>
@@ -250,12 +206,43 @@
 			toastr.success("<?= $this->session->flashdata('success'); ?>")
 		<?php } ?>
 
-		$("#tabel_data").DataTable({
+		$('.select2bs4').select2({
+			theme: 'bootstrap4'
+		});
+
+		var table = $("#tabel_data").DataTable({
+			"initComplete": function(settings, json) {
+				table.buttons().container()
+					.appendTo('#tabel_data_wrapper .col-md-6:eq(0)');
+			},
+			"buttons": ["copy", 'excelHtml5', "print", "colvis"],
+			"language": {
+				"sProcessing": "Sedang memproses...",
+				"sLengthMenu": "Tampilkan _MENU_ entri",
+				"sZeroRecords": "Tidak ditemukan data yang sesuai",
+				"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+				"sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
+				"sInfoFiltered": "(disaring dari _MAX_ entri keseluruhan)",
+				"sInfoPostFix": "",
+				"sSearch": "Cari:",
+				"sUrl": "",
+				"oPaginate": {
+					"sFirst": "Pertama",
+					"sPrevious": "Sebelumnya",
+					"sNext": "Selanjutnya",
+					"sLast": "Terakhir"
+				}
+			},
 			"responsive": true,
+			"serverSide": true,
 			"lengthChange": false,
 			"autoWidth": false,
-			"buttons": ["copy", 'excelHtml5', "print", "colvis"]
-		}).buttons().container().appendTo('#tabel_data_wrapper .col-md-6:eq(0)');
+			"order": [],
+			"ajax": {
+				url: "<?= base_url(); ?>/dikbangspes/fetch_dikbangspes?y=<?= $tahun; ?>",
+				type: "POST"
+			}
+		});
 
 		$('#id_fungsi_dikbangspes-modal').change(function() {
 			$.ajax({
@@ -309,12 +296,12 @@
 			$('.modal-title').html('Form Edit List Dikbangspes');
 			$('#id-modal').val(id);
 			$('#nama-modal').val($('#nama_' + id).val());
-			$('#pangkat-modal').val($('#pangkat_' + id).val());
+			$('#pangkat-modal').val($('#pangkat_' + id).val()).trigger('change');
 			$('#nrp-modal').val($('#nrp_' + id).val());
 			$('#jabatan-modal').val($('#jabatan_' + id).val());
 			$('#kesatuan-modal').val($('#kesatuan_' + id).val());
-			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val());
-			$('#id_jenis_dikbangspes-modal').val($('#id_jenis_dikbangspes_' + id).val());
+			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val()).trigger('change');
+			$('#id_jenis_dikbangspes-modal').val($('#id_jenis_dikbangspes_' + id).val()).trigger('change');
 			$('#tahun-modal').val($('#tahun_' + id).val());
 
 			$('.btn-save-add-data').hide();

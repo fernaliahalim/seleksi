@@ -2,9 +2,143 @@
 
 class Dikbangspes_model extends CI_Model
 {
+	/* Server Side Query */
+	var $table		   = "dikbangspes";
+	var $select_column = array(
+		"dikbangspes.id",
+		"dikbangspes.nama",
+		"dikbangspes.pangkat",
+		"dikbangspes.nrp",
+		"dikbangspes.jabatan",
+		"dikbangspes.kesatuan",
+		"dikbangspes.id_jenis_dikbangspes",
+		"dikbangspes.tahun",
+		"jenis_dikbangspes.nama_dikbangspes",
+		"jenis_dikbangspes.jml_siswa",
+		"jenis_dikbangspes.lama_pendidikan",
+		"jenis_dikbangspes.pelaksanaan_open",
+		"jenis_dikbangspes.pelaksanaan_close",
+		"jenis_dikbangspes.id_fungsi_dikbangspes",
+		"fungsi_dikbangspes.detail"
+	);
+	var $order_column 	= array(
+		"dikbangspes.id",
+		"dikbangspes.nama",
+		"dikbangspes.pangkat",
+		"dikbangspes.nrp",
+		"dikbangspes.jabatan",
+		"dikbangspes.kesatuan",
+		"dikbangspes.id_jenis_dikbangspes",
+		"dikbangspes.tahun",
+		"jenis_dikbangspes.nama_dikbangspes",
+		"jenis_dikbangspes.jml_siswa",
+		"jenis_dikbangspes.lama_pendidikan",
+		"jenis_dikbangspes.pelaksanaan_open",
+		"jenis_dikbangspes.pelaksanaan_close",
+		"jenis_dikbangspes.id_fungsi_dikbangspes",
+		"fungsi_dikbangspes.detail"
+	);
+
+	public function make_query($tahun)
+	{
+		if ($tahun == "All") {
+			$this->db->select($this->select_column);
+			$this->db->from($this->table);
+			$this->db->join('jenis_dikbangspes', 'dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id');
+			$this->db->join('fungsi_dikbangspes', 'fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes');
+		} else {
+			$this->db->select($this->select_column);
+			$this->db->from($this->table);
+			$this->db->join('jenis_dikbangspes', 'dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id');
+			$this->db->join('fungsi_dikbangspes', 'fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes');
+			$this->db->where("dikbangspes.tahun", $tahun);
+		}
+
+		if (isset($_POST["search"]["value"])) {
+			$this->db->group_start();
+			$this->db->like("dikbangspes.id", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.pangkat", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.nrp", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.jabatan", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.kesatuan", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.id_jenis_dikbangspes", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.tahun", $_POST["search"]["value"]);
+			$this->db->or_like("jenis_dikbangspes.nama_dikbangspes", $_POST["search"]["value"]);
+			$this->db->or_like("jenis_dikbangspes.jml_siswa", $_POST["search"]["value"]);
+			$this->db->or_like("jenis_dikbangspes.lama_pendidikan", $_POST["search"]["value"]);
+			$this->db->or_like("jenis_dikbangspes.pelaksanaan_open", $_POST["search"]["value"]);
+			$this->db->or_like("jenis_dikbangspes.pelaksanaan_close", $_POST["search"]["value"]);
+			$this->db->or_like("jenis_dikbangspes.id_fungsi_dikbangspes", $_POST["search"]["value"]);
+			$this->db->or_like("fungsi_dikbangspes.detail", $_POST["search"]["value"]);
+			$this->db->group_end();
+		}
+		if (isset($_POST["order"])) {
+			$this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+		} else {
+			$this->db->order_by("dikbangspes.tahun", "ASC");
+		}
+	}
+
+	public function make_datatables($tahun)
+	{
+		$this->make_query($tahun);
+		if ($_POST["length"] != -1) {
+			$this->db->limit($_POST["length"], $_POST["start"]);
+		}
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_flltered_data($tahun)
+	{
+		$this->make_query($tahun);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function get_all_data($tahun)
+	{
+		if ($tahun == "All") {
+			$this->db->select("*");
+			$this->db->from($this->table);
+			$this->db->join('jenis_dikbangspes', 'dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id');
+			$this->db->join('fungsi_dikbangspes', 'fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes');
+		} else {
+			$this->db->select("*");
+			$this->db->from($this->table);
+			$this->db->join('jenis_dikbangspes', 'dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id');
+			$this->db->join('fungsi_dikbangspes', 'fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes');
+			$this->db->where("dikbangspes.tahun", $tahun);
+		}
+		return $this->db->count_all_results();
+	}
+
+
+	/* Query */
 	public function get_all($tahun)
 	{
-		$sql = "SELECT dikbangspes.id,
+		if ($tahun == "All") {
+			$sql = "SELECT dikbangspes.id,
+						dikbangspes.nama,
+						dikbangspes.pangkat,
+						dikbangspes.nrp,
+						dikbangspes.jabatan,
+						dikbangspes.kesatuan,
+						dikbangspes.id_jenis_dikbangspes,
+						dikbangspes.tahun,
+						jenis_dikbangspes.nama_dikbangspes,
+						jenis_dikbangspes.jml_siswa,
+						jenis_dikbangspes.lama_pendidikan,
+						jenis_dikbangspes.pelaksanaan_open,
+						jenis_dikbangspes.pelaksanaan_close, 
+						jenis_dikbangspes.id_fungsi_dikbangspes,
+						fungsi_dikbangspes.detail 
+					FROM dikbangspes
+					JOIN jenis_dikbangspes ON dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id
+					JOIN fungsi_dikbangspes ON fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes
+					ORDER BY dikbangspes.tahun, dikbangspes.id ASC;";
+		} else {
+			$sql = "SELECT dikbangspes.id,
 					   dikbangspes.nama,
 					   dikbangspes.pangkat,
 					   dikbangspes.nrp,
@@ -19,11 +153,12 @@ class Dikbangspes_model extends CI_Model
 					   jenis_dikbangspes.pelaksanaan_close, 
 					   jenis_dikbangspes.id_fungsi_dikbangspes,
 					   fungsi_dikbangspes.detail 
-				FROM dikbangspes
-				JOIN jenis_dikbangspes ON dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id
-				JOIN fungsi_dikbangspes ON fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes
-				WHERE dikbangspes.tahun = ?
-				ORDER BY dikbangspes.tahun, dikbangspes.id ASC;";
+					FROM dikbangspes
+					JOIN jenis_dikbangspes ON dikbangspes.id_jenis_dikbangspes = jenis_dikbangspes.id
+					JOIN fungsi_dikbangspes ON fungsi_dikbangspes.id = jenis_dikbangspes.id_fungsi_dikbangspes
+					WHERE dikbangspes.tahun = ?
+					ORDER BY dikbangspes.tahun, dikbangspes.id ASC;";
+		}
 		return $this->db->query($sql, $tahun);
 	}
 

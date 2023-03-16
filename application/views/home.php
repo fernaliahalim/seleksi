@@ -66,8 +66,8 @@
 											<th>Pangkat</th>
 											<th>Jabatan</th>
 											<th>Kesatuan</th>
-											<th>Jenis Dikbangspes</th>
 											<th>Fungsi Dikbangspes</th>
+											<th>Jenis Dikbangspes</th>
 											<th>Tahun</th>
 										</tr>
 									</thead>
@@ -86,10 +86,10 @@
 													<?= $kesatuan[$i]; ?>
 												</td>
 												<td>
-													<?= $dikbangspes[$i]; ?>
+													<?= $detail[$i]; ?>
 												</td>
 												<td>
-													<?= $detail[$i]; ?>
+													<?= $dikbangspes[$i]; ?>
 												</td>
 												<td>
 													<?= $tahun[$i]; ?>

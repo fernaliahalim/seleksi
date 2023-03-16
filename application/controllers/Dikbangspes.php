@@ -24,8 +24,7 @@ class Dikbangspes extends CI_Controller
 				'tahun'		=> $tahun,
 				'rs_year'	=> $this->dikbangspes_model->get_year(),
 				'rs_fungsi' => $this->fungsi_dikbangspes_model->get_all(),
-				'rs_jenis'  => $this->jenis_dikbangspes_model->get_all(),
-				'rs_data'	=> $this->dikbangspes_model->get_all($tahun)
+				'rs_jenis'  => $this->jenis_dikbangspes_model->get_all()
 			);
 
 			$this->load->view('header');
@@ -35,6 +34,53 @@ class Dikbangspes extends CI_Controller
 		} else {
 			redirect('home');
 		}
+	}
+
+	public function fetch_dikbangspes()
+	{
+		$tahun = !empty($this->input->get('y')) ? $this->input->get('y') : date("Y");
+		$fetch_data = $this->dikbangspes_model->make_datatables($tahun);
+		$data = array();
+
+		$i = 1;
+		foreach ($fetch_data as $row) {
+			$sub_array = array();
+
+			$sub_array[] = $i++;
+			$sub_array[] = $row->nama;
+			$sub_array[] = $row->pangkat;
+			$sub_array[] = $row->nrp;
+			$sub_array[] = $row->jabatan;
+			$sub_array[] = $row->kesatuan;
+			$sub_array[] = $row->detail;
+			$sub_array[] = $row->nama_dikbangspes;
+			$sub_array[] = $row->tahun;
+			$sub_array[] = '<input type="text" id="nama_' . $row->id . '" value="' . $row->nama . '" hidden />
+							<input type="text" id="pangkat_' . $row->id . '" value="' . $row->pangkat . '" hidden />
+							<input type="text" id="nrp_' . $row->id . '" value="' . $row->nrp . '" hidden />
+							<input type="text" id="jabatan_' . $row->id . '" value="' . $row->jabatan . '" hidden />
+							<input type="text" id="kesatuan_' . $row->id . '" value="' . $row->kesatuan . '" hidden />
+							<input type="text" id="id_jenis_dikbangspes_' . $row->id . '" value="' . $row->id_jenis_dikbangspes . '" hidden />
+							<input type="text" id="id_fungsi_dikbangspes_' . $row->id . '" value="' . $row->id_fungsi_dikbangspes . '" hidden />
+							<input type="text" id="tahun_' . $row->id . '" value="' . $row->tahun . '" hidden />
+							<a type="button" class="btn btn-sm btn-warning btn-update" id="' . $row->id . '" data-toggle="tooltip" title="Ubah">
+								<i class="nav-icon fas fa-edit"></i>
+							</a>
+							<a type="button" class="btn btn-sm btn-danger btn-delete"  id="' . $row->id . '" data-toggle="tooltip" title="Hapus">
+								<i class="nav-icon fas fa-trash-alt"></i>
+							</a>';
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw"            => intval($this->input->get_post("draw")),
+			"recordsTotal"    => $this->dikbangspes_model->get_all_data($tahun),
+			"recordsFiltered" => $this->dikbangspes_model->get_flltered_data($tahun),
+			"data"            => $data
+		);
+
+		echo json_encode($output);
 	}
 
 	public function get_jenis_dikbangspes()

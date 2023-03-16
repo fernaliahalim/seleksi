@@ -105,7 +105,7 @@
 					<div class="mb-3">
 						<label class="form-label">Fungsi Dikbangspes</label>
 						<input type="text" id="id-modal" name="id" value="" hidden />
-						<select class="form-control form-control" id="id_fungsi_dikbangspes-modal" name="id_fungsi_dikbangspes">
+						<select class="form-control select2bs4" id="id_fungsi_dikbangspes-modal" name="id_fungsi_dikbangspes">
 							<?php foreach ($rs_fungsi->result_array() as $row) { ?>
 								<option value="<?= $row['id']; ?>"><?= $row['detail']; ?></option>
 							<?php } ?>
@@ -171,7 +171,28 @@
 			toastr.success("<?= $this->session->flashdata('success'); ?>")
 		<?php } ?>
 
+		$('.select2bs4').select2({
+			theme: 'bootstrap4'
+		});
+
 		$("#tabel_data").DataTable({
+			"language": {
+				"sProcessing": "Sedang memproses...",
+				"sLengthMenu": "Tampilkan _MENU_ entri",
+				"sZeroRecords": "Tidak ditemukan data yang sesuai",
+				"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+				"sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
+				"sInfoFiltered": "(disaring dari _MAX_ entri keseluruhan)",
+				"sInfoPostFix": "",
+				"sSearch": "Cari:",
+				"sUrl": "",
+				"oPaginate": {
+					"sFirst": "Pertama",
+					"sPrevious": "Sebelumnya",
+					"sNext": "Selanjutnya",
+					"sLast": "Terakhir"
+				}
+			},
 			"responsive": true,
 			"lengthChange": false,
 			"autoWidth": false,
@@ -208,7 +229,7 @@
 
 			$('.modal-title').html('Form Edit Data Fungsi Dikbangspes');
 			$('#id-modal').val(id);
-			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val());
+			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val()).trigger('change');
 			$('#nama_dikbangspes-modal').val($('#nama_dikbangspes_' + id).val());
 			$('#jml_siswa-modal').val($('#jml_siswa_' + id).val());
 			$('#lama_pendidikan-modal').val($('#lama_pendidikan_' + id).val());

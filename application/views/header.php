@@ -31,6 +31,8 @@
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/toastr/toastr.min.css">
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/select2/select2.min.css">
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 	<script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 
@@ -73,4 +75,5 @@
 	<script src="<?= base_url(); ?>assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 	<script src="<?= base_url(); ?>assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 	<script src="<?= base_url(); ?>assets/plugins/toastr/toastr.min.js"></script>
+	<script src="<?= base_url(); ?>assets/plugins/select2/select2.full.min.js"></script>
 </head>
