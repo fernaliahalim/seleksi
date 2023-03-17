@@ -18,37 +18,43 @@ class Dashboard extends CI_Controller
 
 			$nrp 	 = !empty($this->input->get('nrp')) ? $this->input->get('nrp') : "";
 
-			$rs_data 	 = "";
-			$nama 		 = "";
-			$pangkat	 = array();
-			$jabatan	 = array();
-			$kesatuan 	 = array();
-			$dikbangspes = array();
-			$detail		 = array();
-			$tahun		 = array();
+			$rs_data 	     = "";
+			$nama 		     = "";
+			$pangkat	     = array();
+			$jabatan	     = array();
+			$kesatuan 	     = array();
+			$dikbangspes     = array();
+			$detail		     = array();
+			$lama_pendidikan = array();
+			$tgl_open        = array();
+			$tgl_close		 = array();
 
 			if ($nrp != "") {
 				$rs_data = $this->dikbangspes_model->get_by_nrp($nrp);
 				foreach ($rs_data->result_array() as $row) {
-					$nama          = $row['nama'];
-					$pangkat[]     = $row['pangkat'];
-					$jabatan[]     = $row['jabatan'];
-					$kesatuan[]    = $row['kesatuan'];
-					$dikbangspes[] = $row['nama_dikbangspes'];
-					$detail[]	   = $row['detail'];
-					$tahun[]	   = $row['tahun'];
+					$nama              = $row['nama'];
+					$pangkat[]         = $row['pangkat'];
+					$jabatan[]         = $row['jabatan'];
+					$kesatuan[]        = $row['kesatuan'];
+					$dikbangspes[]     = $row['nama_dikbangspes'];
+					$detail[]	       = $row['detail'];
+					$lama_pendidikan[] = $row['lama_pendidikan'];
+					$tgl_open[]		   = date('d-m-Y', strtotime($row['tgl_open']));
+					$tgl_close[]	   =  date('d-m-Y', strtotime($row['tgl_close']));
 				}
 			}
 
 			$data = array(
-				'nrp'		  => $nrp,
-				'nama'		  => $nama,
-				'pangkat' 	  => $pangkat,
-				'jabatan' 	  => $jabatan,
-				'kesatuan' 	  => $kesatuan,
-				'dikbangspes' => $dikbangspes,
-				'detail'	  => $detail,
-				'tahun'		  => $tahun
+				'nrp'		      => $nrp,
+				'nama'		      => $nama,
+				'pangkat' 	      => $pangkat,
+				'jabatan' 	      => $jabatan,
+				'kesatuan' 	      => $kesatuan,
+				'dikbangspes'     => $dikbangspes,
+				'detail'	      => $detail,
+				'lama_pendidikan' => $lama_pendidikan,
+				'tgl_open'		  => $tgl_open,
+				'tgl_close'		  => $tgl_close
 			);
 
 			//load dashboard.php view

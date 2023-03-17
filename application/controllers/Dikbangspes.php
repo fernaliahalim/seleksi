@@ -54,7 +54,9 @@ class Dikbangspes extends CI_Controller
 			$sub_array[] = $row->kesatuan;
 			$sub_array[] = $row->detail;
 			$sub_array[] = $row->nama_dikbangspes;
-			$sub_array[] = $row->tahun;
+			$sub_array[] = $row->lama_pendidikan;
+			$sub_array[] = date("d-m-Y", strtotime($row->tgl_open));
+			$sub_array[] = date("d-m-Y", strtotime($row->tgl_close));
 			$sub_array[] = '<input type="text" id="nama_' . $row->id . '" value="' . $row->nama . '" hidden />
 							<input type="text" id="pangkat_' . $row->id . '" value="' . $row->pangkat . '" hidden />
 							<input type="text" id="nrp_' . $row->id . '" value="' . $row->nrp . '" hidden />
@@ -62,7 +64,9 @@ class Dikbangspes extends CI_Controller
 							<input type="text" id="kesatuan_' . $row->id . '" value="' . $row->kesatuan . '" hidden />
 							<input type="text" id="id_jenis_dikbangspes_' . $row->id . '" value="' . $row->id_jenis_dikbangspes . '" hidden />
 							<input type="text" id="id_fungsi_dikbangspes_' . $row->id . '" value="' . $row->id_fungsi_dikbangspes . '" hidden />
-							<input type="text" id="tahun_' . $row->id . '" value="' . $row->tahun . '" hidden />
+							<input type="text" id="lama_pendidikan_' . $row->id . '" value="' . $row->lama_pendidikan . '" hidden />
+							<input type="text" id="tgl_open_' . $row->id . '" value="' . $row->tgl_open . '" hidden />
+							<input type="text" id="tgl_close_' . $row->id . '" value="' . $row->tgl_close . '" hidden />
 							<a type="button" class="btn btn-sm btn-warning btn-update" id="' . $row->id . '" data-toggle="tooltip" title="Ubah">
 								<i class="nav-icon fas fa-edit"></i>
 							</a>
@@ -107,7 +111,9 @@ class Dikbangspes extends CI_Controller
 		$jabatan 	   		   = $this->input->post('jabatan');
 		$kesatuan 	  		   = $this->input->post('kesatuan');
 		$id_jenis_dikbangspes  = $this->input->post('id_jenis_dikbangspes');
-		$tahun 	               = $this->input->post('tahun');
+		$lama_pendidikan	   = $this->input->post('lama_pendidikan');
+		$tgl_open	   		   = $this->input->post('tgl_open');
+		$tgl_close	   		   = $this->input->post('tgl_close');
 
 		$data = array(
 			$nama,
@@ -116,7 +122,9 @@ class Dikbangspes extends CI_Controller
 			$jabatan,
 			$kesatuan,
 			$id_jenis_dikbangspes,
-			$tahun
+			$lama_pendidikan,
+			$tgl_open,
+			$tgl_close
 		);
 
 		$this->dikbangspes_model->add($data);
@@ -132,7 +140,9 @@ class Dikbangspes extends CI_Controller
 		$jabatan 	   		   = $this->input->post('jabatan');
 		$kesatuan 	  		   = $this->input->post('kesatuan');
 		$id_jenis_dikbangspes  = $this->input->post('id_jenis_dikbangspes');
-		$tahun 	               = $this->input->post('tahun');
+		$lama_pendidikan	   = $this->input->post('lama_pendidikan');
+		$tgl_open	   		   = $this->input->post('tgl_open');
+		$tgl_close	   		   = $this->input->post('tgl_close');
 
 		$data = array(
 			$nama,
@@ -141,7 +151,9 @@ class Dikbangspes extends CI_Controller
 			$jabatan,
 			$kesatuan,
 			$id_jenis_dikbangspes,
-			$tahun,
+			$lama_pendidikan,
+			$tgl_open,
+			$tgl_close,
 			$id
 		);
 

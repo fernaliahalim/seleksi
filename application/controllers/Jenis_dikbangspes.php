@@ -35,17 +35,9 @@ class Jenis_Dikbangspes extends CI_Controller
 	{
 		$id_fungsi_dikbangspes = $this->input->post('id_fungsi_dikbangspes');
 		$nama_dikbangspes 	   = $this->input->post('nama_dikbangspes');
-		$jml_siswa 	   		   = $this->input->post('jml_siswa');
-		$lama_pendidikan 	   = $this->input->post('lama_pendidikan');
-		$pelaksanaan_open 	   = $this->input->post('pelaksanaan_open');
-		$pelaksanaan_close 	   = $this->input->post('pelaksanaan_close');
 
 		$data = array(
 			$nama_dikbangspes,
-			$jml_siswa,
-			$lama_pendidikan,
-			$pelaksanaan_open,
-			$pelaksanaan_close,
 			$id_fungsi_dikbangspes
 		);
 
@@ -58,17 +50,9 @@ class Jenis_Dikbangspes extends CI_Controller
 		$id 				   = $this->input->post('id');
 		$id_fungsi_dikbangspes = $this->input->post('id_fungsi_dikbangspes');
 		$nama_dikbangspes 	   = $this->input->post('nama_dikbangspes');
-		$jml_siswa 	   		   = $this->input->post('jml_siswa');
-		$lama_pendidikan 	   = $this->input->post('lama_pendidikan');
-		$pelaksanaan_open 	   = $this->input->post('pelaksanaan_open');
-		$pelaksanaan_close 	   = $this->input->post('pelaksanaan_close');
 
 		$data = array(
 			$nama_dikbangspes,
-			$jml_siswa,
-			$lama_pendidikan,
-			$pelaksanaan_open,
-			$pelaksanaan_close,
 			$id_fungsi_dikbangspes,
 			$id
 		);

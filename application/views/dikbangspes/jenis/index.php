@@ -32,12 +32,10 @@
 								<thead>
 									<tr>
 										<th width="20px;">No.</th>
+										<th>ID Fungsi</th>
 										<th>Fungsi Dikbangspes</th>
+										<th>ID Jenis</th>
 										<th>Jenis Dikbangspes</th>
-										<th>Jumlah Siswa</th>
-										<th>Lama Pendidikan</th>
-										<th>Buka</th>
-										<th>Tutup</th>
 										<th>#</th>
 									</tr>
 								</thead>
@@ -46,29 +44,15 @@
 									foreach ($rs_data->result_array() as $row) { ?>
 										<tr>
 											<td><?= $i++; ?></td>
+											<td><?= $row['id_fungsi_dikbangspes']; ?></td>
 											<td>
 												<?= $row['detail']; ?>
 												<input type="text" id="id_fungsi_dikbangspes_<?= $row['id']; ?>" value="<?= $row['id_fungsi_dikbangspes']; ?>" hidden />
 											</td>
+											<td><?= $row['id']; ?></td>
 											<td>
 												<?= $row['nama_dikbangspes']; ?>
 												<input type="text" id="nama_dikbangspes_<?= $row['id']; ?>" value="<?= $row['nama_dikbangspes']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['jml_siswa']; ?>
-												<input type="text" id="jml_siswa_<?= $row['id']; ?>" value="<?= $row['jml_siswa']; ?>" hidden />
-											</td>
-											<td>
-												<?= $row['lama_pendidikan']; ?>
-												<input type="text" id="lama_pendidikan_<?= $row['id']; ?>" value="<?= $row['lama_pendidikan']; ?>" hidden />
-											</td>
-											<td>
-												<?= date("d-m-Y", strtotime($row['pelaksanaan_open'])); ?>
-												<input type="text" id="pelaksanaan_open_<?= $row['id']; ?>" value="<?= $row['pelaksanaan_open']; ?>" hidden />
-											</td>
-											<td>
-												<?= date("d-m-Y", strtotime($row['pelaksanaan_close'])); ?>
-												<input type="text" id="pelaksanaan_close_<?= $row['id']; ?>" value="<?= $row['pelaksanaan_close']; ?>" hidden />
 											</td>
 											<td>
 												<button type="button" class="btn btn-sm btn-warning btn-update" id="<?= $row['id']; ?>" data-toggle="tooltip" title="Ubah">
@@ -114,22 +98,6 @@
 					<div class="mb-3">
 						<label class="form-label">Jenis Dikbangspes</label>
 						<input type="text" class="form-control" id="nama_dikbangspes-modal" name="nama_dikbangspes" placeholder="Jenis Dikbangspes">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Jumlah Siswa</label>
-						<input type="text" class="form-control" id="jml_siswa-modal" name="jml_siswa" placeholder="Jumlah Siswa">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Lama Pendidikan</label>
-						<input type="text" class="form-control" id="lama_pendidikan-modal" name="lama_pendidikan" placeholder="Lama Pendidikan">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Tanggal Awal Pelaksanaan</label>
-						<input type="date" class="form-control" id="pelaksanaan_open-modal" name="pelaksanaan_open">
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Tanggal Akhir Pelaksanaan</label>
-						<input type="date" class="form-control" id="pelaksanaan_close-modal" name="pelaksanaan_close">
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -231,10 +199,6 @@
 			$('#id-modal').val(id);
 			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val()).trigger('change');
 			$('#nama_dikbangspes-modal').val($('#nama_dikbangspes_' + id).val());
-			$('#jml_siswa-modal').val($('#jml_siswa_' + id).val());
-			$('#lama_pendidikan-modal').val($('#lama_pendidikan_' + id).val());
-			$('#pelaksanaan_open-modal').val($('#pelaksanaan_open_' + id).val());
-			$('#pelaksanaan_close-modal').val($('#pelaksanaan_close_' + id).val());
 
 			$('.btn-save-add-data').hide();
 			$('.btn-save-change-data').show();

@@ -61,7 +61,9 @@
 										<th>Kesatuan</th>
 										<th>Fungsi Dikbangspes</th>
 										<th>Jenis Dikbangspes</th>
-										<th>Tahun</th>
+										<th>Lama Pendidikan</th>
+										<th>Tgl Buka</th>
+										<th>Tgl Tutup</th>
 										<th>#</th>
 									</tr>
 								</thead>
@@ -163,8 +165,16 @@
 						</select>
 					</div>
 					<div class="mb-3">
-						<label class="form-label">Tahun</label>
-						<input type="text" class="form-control" id="tahun-modal" name="tahun" placeholder="Tahun">
+						<label class="form-label">Lama Pendidikan</label>
+						<input type="text" class="form-control" id="lama_pendidikan-modal" name="lama_pendidikan" placeholder="Lama Pendidikan">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Tanggal Buka</label>
+						<input type="date" class="form-control" id="tgl_open-modal" name="tgl_open" placeholder="Tanggal Buka">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Tanggal Tutup</label>
+						<input type="date" class="form-control" id="tgl_close-modal" name="tgl_close" placeholder="Tanggal Tutup">
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -268,6 +278,18 @@
 
 		$('#btn-add').click(function() {
 			$('.modal-title').html('Form Tambah List Dikbangspes');
+			$('#id-modal').val("");
+			$('#nama-modal').val("");
+			$('#pangkat-modal').val(0).trigger('change');
+			$('#nrp-modal').val("");
+			$('#jabatan-modal').val("");
+			$('#kesatuan-modal').val("");
+			$('#id_fungsi_dikbangspes-modal').val(0);
+			$('#id_jenis_dikbangspes-modal').val(0).trigger('change');
+			$('#lama_pendidikan-modal').val("");
+			$('#tgl_open-modal').val("");
+			$('#tgl_close-modal').val("");
+
 			$('.btn-save-add-data').show();
 			$('.btn-save-change-data').hide();
 
@@ -300,9 +322,11 @@
 			$('#nrp-modal').val($('#nrp_' + id).val());
 			$('#jabatan-modal').val($('#jabatan_' + id).val());
 			$('#kesatuan-modal').val($('#kesatuan_' + id).val());
-			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val()).trigger('change');
+			$('#id_fungsi_dikbangspes-modal').val($('#id_fungsi_dikbangspes_' + id).val()).trigger('change.select2');
 			$('#id_jenis_dikbangspes-modal').val($('#id_jenis_dikbangspes_' + id).val()).trigger('change');
-			$('#tahun-modal').val($('#tahun_' + id).val());
+			$('#lama_pendidikan-modal').val($('#lama_pendidikan_' + id).val());
+			$('#tgl_open-modal').val($('#tgl_open_' + id).val());
+			$('#tgl_close-modal').val($('#tgl_close_' + id).val());
 
 			$('.btn-save-add-data').hide();
 			$('.btn-save-change-data').show();

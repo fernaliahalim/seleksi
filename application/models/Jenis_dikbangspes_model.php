@@ -21,8 +21,8 @@ class Jenis_dikbangspes_model extends CI_Model
 
 	public function add($data)
 	{
-		$sql = "INSERT INTO jenis_dikbangspes(nama_dikbangspes, jml_siswa, lama_pendidikan, pelaksanaan_open, pelaksanaan_close, id_fungsi_dikbangspes)
-                VALUES(?, ?, ?, ?, ?, ?);";
+		$sql = "INSERT INTO jenis_dikbangspes(nama_dikbangspes, id_fungsi_dikbangspes)
+                VALUES(?, ?);";
 		return $this->db->query($sql, $data);
 	}
 
@@ -30,10 +30,6 @@ class Jenis_dikbangspes_model extends CI_Model
 	{
 		$sql = "UPDATE jenis_dikbangspes
                 SET nama_dikbangspes = ?,
-					jml_siswa = ?,
-					lama_pendidikan = ?,
-					pelaksanaan_open = ?,
-					pelaksanaan_close = ?,
 					id_fungsi_dikbangspes = ?
                 WHERE id = ?;";
 		return $this->db->query($sql, $data);

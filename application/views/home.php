@@ -38,7 +38,7 @@
 			<br />
 			<?php if ($nrp != "") { ?>
 				<div class="row" id="section-dikbangspes">
-					<div class="col-md-3">
+					<div class="col-md-2">
 
 						<div class="card card-primary card-outline">
 							<div class="card-body box-profile">
@@ -53,7 +53,7 @@
 
 					</div>
 
-					<div class="col-md-9">
+					<div class="col-md-10">
 						<div class="card">
 							<div class="card-header p-2">
 								Riwayat Dikbangspes
@@ -68,7 +68,9 @@
 											<th>Kesatuan</th>
 											<th>Fungsi Dikbangspes</th>
 											<th>Jenis Dikbangspes</th>
-											<th>Tahun</th>
+											<th>Lama Pendidikan</th>
+											<th>Tgl Buka</th>
+											<th>Tgl Tutup</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -92,7 +94,13 @@
 													<?= $dikbangspes[$i]; ?>
 												</td>
 												<td>
-													<?= $tahun[$i]; ?>
+													<?= $lama_pendidikan[$i]; ?>
+												</td>
+												<td>
+													<?= $tgl_open[$i]; ?>
+												</td>
+												<td>
+													<?= $tgl_close[$i]; ?>
 												</td>
 											</tr>
 										<?php } ?>
@@ -113,6 +121,23 @@
 <script>
 	$(document).ready(function() {
 		$("#tabel_data").DataTable({
+			"language": {
+				"sProcessing": "Sedang memproses...",
+				"sLengthMenu": "Tampilkan _MENU_ entri",
+				"sZeroRecords": "Tidak ditemukan data yang sesuai",
+				"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+				"sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
+				"sInfoFiltered": "(disaring dari _MAX_ entri keseluruhan)",
+				"sInfoPostFix": "",
+				"sSearch": "Cari:",
+				"sUrl": "",
+				"oPaginate": {
+					"sFirst": "Pertama",
+					"sPrevious": "Sebelumnya",
+					"sNext": "Selanjutnya",
+					"sLast": "Terakhir"
+				}
+			},
 			"responsive": true,
 			"lengthChange": false,
 			"autoWidth": false,
