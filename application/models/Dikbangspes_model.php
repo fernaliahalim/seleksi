@@ -53,6 +53,7 @@ class Dikbangspes_model extends CI_Model
 		if (isset($_POST["search"]["value"])) {
 			$this->db->group_start();
 			$this->db->like("dikbangspes.id", $_POST["search"]["value"]);
+			$this->db->or_like("dikbangspes.nama", $_POST["search"]["value"]);
 			$this->db->or_like("dikbangspes.pangkat", $_POST["search"]["value"]);
 			$this->db->or_like("dikbangspes.nrp", $_POST["search"]["value"]);
 			$this->db->or_like("dikbangspes.jabatan", $_POST["search"]["value"]);

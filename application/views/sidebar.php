@@ -76,6 +76,22 @@
 							</a>
 						</li>
 						<li class="nav-item">
+							<a href="<?= base_url(); ?>prolat" class="nav-link <?= $this->session->userdata('mainsetting_active_menu') == "list_prolat" ? 'active' : ''; ?>">
+								<i class="nav-icon fas fa-list"></i>
+								<p>
+									List Prolat
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url(); ?>pelatihan_luar_polri" class="nav-link <?= $this->session->userdata('mainsetting_active_menu') == "list_pelatihan_luar" ? 'active' : ''; ?>">
+								<i class="nav-icon fas fa-list"></i>
+								<p>
+									List Pelatihan Diluar Polri
+								</p>
+							</a>
+						</li>
+						<li class="nav-item">
 							<a href="<?= base_url(); ?>home/sign_out" class="nav-link">
 								<i class="nav-icon fas fa-cog"></i>
 								<p>
