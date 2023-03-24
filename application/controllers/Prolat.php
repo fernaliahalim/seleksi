@@ -81,6 +81,37 @@ class Prolat extends CI_Controller
 		echo json_encode($output);
 	}
 
+	public function fetch_all_data()
+	{
+		$tahun = !empty($this->input->get('y')) ? $this->input->get('y') : date("Y");
+		$fetch_data = $this->prolat_model->queriying_all_data($tahun);
+		$data = array();
+
+		$i = 1;
+		foreach ($fetch_data as $row) {
+			$sub_array = array();
+
+			$sub_array[] = $i++;
+			$sub_array[] = $row->nama;
+			$sub_array[] = $row->pangkat;
+			$sub_array[] = $row->nrp;
+			$sub_array[] = $row->jabatan;
+			$sub_array[] = $row->kesatuan;
+			$sub_array[] = $row->fungsi_prolat;
+			$sub_array[] = $row->jenis_prolat;
+			$sub_array[] = $row->tahun;
+			$sub_array[] = $row->ket;
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"data" => $data
+		);
+
+		echo json_encode($output);
+	}
+
 	public function add()
 	{
 		$nama 		   = $this->input->post('nama');

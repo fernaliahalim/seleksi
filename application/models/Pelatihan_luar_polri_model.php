@@ -74,6 +74,13 @@ class Pelatihan_luar_polri_model extends CI_Model
 		return $query->result();
 	}
 
+	public function queriying_all_data($tahun)
+	{
+		$this->make_query($tahun);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function get_flltered_data($tahun)
 	{
 		$this->make_query($tahun);

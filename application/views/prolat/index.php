@@ -93,11 +93,11 @@
 					<div class="mb-3">
 						<label class="form-label">Nama</label>
 						<input type="text" id="id-modal" name="id" value="" hidden />
-						<input type="text" class="form-control" id="nama-modal" name="nama" placeholder="Nama">
+						<input type="text" class="form-control" id="nama-modal" name="nama" placeholder="Nama" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Pangkat</label>
-						<select class="form-control select2bs4" id="pangkat-modal" name="pangkat">
+						<select class="form-control select2bs4" id="pangkat-modal" name="pangkat" required>
 							<option value="0">--- Pilih Pangkat ---</option>
 							<option value="KOMBES POL">KOMBES POL</option>
 							<option value="AKBP">AKBP</option>
@@ -135,27 +135,27 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">NRP</label>
-						<input type="text" class="form-control" id="nrp-modal" name="nrp" placeholder="NRP">
+						<input type="text" class="form-control" id="nrp-modal" name="nrp" placeholder="NRP" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Jabatan</label>
-						<input type="text" class="form-control" id="jabatan-modal" name="jabatan" placeholder="Jabatan">
+						<input type="text" class="form-control" id="jabatan-modal" name="jabatan" placeholder="Jabatan" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Kesatuan</label>
-						<input type="text" class="form-control" id="kesatuan-modal" name="kesatuan" placeholder="Kesatuan">
+						<input type="text" class="form-control" id="kesatuan-modal" name="kesatuan" placeholder="Kesatuan" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Fungsi Prolat</label>
-						<input type="text" class="form-control" id="fungsi-modal" name="fungsi_prolat" placeholder="Fungsi Prolat">
+						<input type="text" class="form-control" id="fungsi-modal" name="fungsi_prolat" placeholder="Fungsi Prolat" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Jenis Prolat</label>
-						<input type="text" class="form-control" id="jenis-modal" name="jenis_prolat" placeholder="Jenis Prolat">
+						<input type="text" class="form-control" id="jenis-modal" name="jenis_prolat" placeholder="Jenis Prolat" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Tahun</label>
-						<input type="text" class="form-control" id="tahun-modal" name="tahun" placeholder="Tahun">
+						<input type="text" class="form-control" id="tahun-modal" name="tahun" placeholder="Tahun" required>
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Keterangan</label>
@@ -238,6 +238,33 @@
 				type: "POST"
 			}
 		});
+
+		jQuery.fn.DataTable.Api.register('buttons.exportData()', function(options) {
+			if (this.context.length) {
+				var exportHeader = $("#tabel_data_wrapper thead tr th").map(function() {
+					return this.innerHTML;
+				}).get();
+				var exportBody = GetDataToExport();
+				return {
+					body: exportBody,
+					header: exportHeader
+				};
+			}
+		});
+
+		function GetDataToExport() {
+			var jsonResult = $.ajax({
+				url: "<?= base_url(); ?>/prolat/fetch_all_data?y=<?= $tahun; ?>",
+				success: function(result) {},
+				async: false
+			});
+			var exportBody = JSON.parse(jsonResult.responseText);
+			return exportBody.data.map(function(el) {
+				return Object.keys(el).map(function(key) {
+					return el[key]
+				});
+			});
+		}
 
 		$('#btn-search').click(function() {
 			var y = $('#y').val();

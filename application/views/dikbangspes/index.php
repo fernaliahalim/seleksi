@@ -254,6 +254,33 @@
 			}
 		});
 
+		jQuery.fn.DataTable.Api.register('buttons.exportData()', function(options) {
+			if (this.context.length) {
+				var exportHeader = $("#tabel_data_wrapper thead tr th").map(function() {
+					return this.innerHTML;
+				}).get();
+				var exportBody = GetDataToExport();
+				return {
+					body: exportBody,
+					header: exportHeader
+				};
+			}
+		});
+
+		function GetDataToExport() {
+			var jsonResult = $.ajax({
+				url: "<?= base_url(); ?>/dikbangspes/fetch_all_data?y=<?= $tahun; ?>",
+				success: function(result) {},
+				async: false
+			});
+			var exportBody = JSON.parse(jsonResult.responseText);
+			return exportBody.data.map(function(el) {
+				return Object.keys(el).map(function(key) {
+					return el[key]
+				});
+			});
+		}
+
 		$('#id_fungsi_dikbangspes-modal').change(function() {
 			$.ajax({
 				url: "<?= base_url() ?>dikbangspes/get_jenis_dikbangspes",

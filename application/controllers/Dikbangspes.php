@@ -87,6 +87,39 @@ class Dikbangspes extends CI_Controller
 		echo json_encode($output);
 	}
 
+	public function fetch_all_data()
+	{
+		$tahun = !empty($this->input->get('y')) ? $this->input->get('y') : date("Y");
+		$fetch_data = $this->dikbangspes_model->queriying_all_data($tahun);
+		$data = array();
+
+		$i = 1;
+		foreach ($fetch_data as $row) {
+			$sub_array = array();
+
+			$sub_array[] = $i++;
+			$sub_array[] = $row->nama;
+			$sub_array[] = $row->pangkat;
+			$sub_array[] = $row->nrp;
+			$sub_array[] = $row->jabatan;
+			$sub_array[] = $row->kesatuan;
+			$sub_array[] = $row->detail;
+			$sub_array[] = $row->nama_dikbangspes;
+			$sub_array[] = $row->lama_pendidikan;
+			$sub_array[] = date("d-m-Y", strtotime($row->tgl_open));
+			$sub_array[] = date("d-m-Y", strtotime($row->tgl_close));
+
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"data" => $data
+		);
+
+		echo json_encode($output);
+	}
+
+
 	public function get_jenis_dikbangspes()
 	{
 		if ($this->input->is_ajax_request()) {
